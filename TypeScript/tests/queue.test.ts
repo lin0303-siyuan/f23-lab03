@@ -52,4 +52,47 @@ describe("test size: ", ()=> {
             queue.enqueue(i)
         expect(queue.size()).toBe(11)
     })
+
+    test("11 entris: 10 enqueue -> 1 dequeue -> 2 enqueue", ()=>{
+        const queue = createQueue()
+        for (let i=0;i<10;i++){
+            queue.enqueue(i)
+        }
+        expect(queue.size()).toBe(10)
+        let val = queue.dequeue()
+        expect(queue.size()).toBe(9)
+        expect(val).toBe(9)
+        queue.enqueue(10)
+        expect(queue.size()).toBe(10)
+        queue.enqueue(11)
+        expect(queue.size()).toBe(11)
+    })
 })
+
+test("test clear: the queue should be empty after clear", () => {
+    const queue = createQueue()
+    queue.enqueue(5)
+    queue.clear()
+    expect(queue.size()).toBe(0)
+})
+
+// can nest tests with shared descriptions for better readability
+describe("test dequeue: should remove the one that was most recently added", ()=> {
+    test("2 entris", ()=>{
+        const queue = createQueue()
+        queue.enqueue(1)
+        expect(queue.size()).toBe(1)
+        queue.enqueue(2)
+        expect(queue.size()).toBe(2)
+        const val = queue.dequeue()
+        expect(queue.size()).toBe(1)
+        expect(val).toBe(2)
+    })
+
+    test("0 entry", ()=>{
+        const queue = createQueue()
+        const val = queue.dequeue()
+        expect(val).toBe(null)
+    })
+})
+
