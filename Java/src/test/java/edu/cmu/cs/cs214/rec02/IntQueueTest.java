@@ -72,6 +72,31 @@ public class IntQueueTest {
     }
 
     @Test
+    public void testEnqueueReachCapacity() {
+        List<Integer> fullTestList = new ArrayList<>();
+        for (int i = 1; i <= 10; i++){
+            fullTestList.add(i);
+        }
+        for (int i = 0; i < fullTestList.size(); i++) {
+            mQueue.enqueue(fullTestList.get(i));
+            assertEquals(fullTestList.get(0), mQueue.peek());
+            assertEquals(i + 1, mQueue.size());
+        }
+        mQueue.dequeue();
+        mQueue.enqueue(11);
+        assertEquals(Integer.valueOf(2), mQueue.peek());
+        assertEquals(10, mQueue.size());
+        mQueue.enqueue(12);
+        assertEquals(Integer.valueOf(2), mQueue.peek());
+        assertEquals(11, mQueue.size());
+    }
+
+    @Test
+    public void testDequeueEmptyQueue() {
+        assertNull(mQueue.dequeue());
+    }
+
+    @Test
     public void testDequeue() {
         testList.forEach(n -> mQueue.enqueue(n));
         for (int i = 0; i < testList.size(); i++) {
@@ -100,5 +125,11 @@ public class IntQueueTest {
         }
     }
 
-
+    @Test
+    public void testClear() {
+        mQueue.clear();
+        assertEquals(mQueue.size(), 0);
+        assertEquals(mQueue.isEmpty(), true);
+        assertNull(mQueue.peek());
+    }
 }
